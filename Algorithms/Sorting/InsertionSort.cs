@@ -21,7 +21,6 @@ namespace Algorithms.Sorting
             this.isStable = isStable;
         }
 
-        // BCS -> O(n) 
         public IList<T> Sort<T>(IList<T> input) where T: IComparable<T>
         {
             return isForwardSort
@@ -45,8 +44,10 @@ namespace Algorithms.Sorting
                     var currentElement = input[innerIndex];
                     var nextElement = input[innerIndex + 1];
 
-                    if (ShouldSwap(currentElement, nextElement))
+                    if (HasInversion(currentElement, nextElement))
                         SwapForward(input, innerIndex, currentElement, nextElement);
+                    else
+                        break;
                 }
             }
 
@@ -71,7 +72,7 @@ namespace Algorithms.Sorting
                     var currentElemenet = input[innerIndex];
                     var previousElement = input[innerIndex - 1];
 
-                    if (ShouldSwap(previousElement, currentElemenet))
+                    if (HasInversion(previousElement, currentElemenet))
                         SwapBackward(input, innerIndex, currentElemenet, previousElement);
                     else
                     {
@@ -94,15 +95,15 @@ namespace Algorithms.Sorting
             input[innerIndex] = previousElement;
         }
 
-        private bool ShouldSwap<T>(IComparable<T> innerElement, T outerElement)
+        private bool HasInversion<T>(IComparable<T> firstPosElement, T secondPosElement)
         {
             return order == SortOrder.Ascending
                 ? isStable
-                    ? innerElement.GreaterThan(outerElement)
-                    : innerElement.GreaterOrEqualThan(outerElement)
+                    ? firstPosElement.GreaterThan(secondPosElement)
+                    : firstPosElement.GreaterOrEqualThan(secondPosElement)
                 : isStable
-                    ? innerElement.LesserThan(outerElement)
-                    : innerElement.LesserOrEqualThan(outerElement);
+                    ? firstPosElement.LesserThan(secondPosElement)
+                    : firstPosElement.LesserOrEqualThan(secondPosElement);
         }
     }
 }
