@@ -1,5 +1,6 @@
 using System.Linq;
 using Algorithms.Sorting;
+using Algorithms.Utils.Logger;
 using Algorithms.Utils.Models;
 using NUnit.Framework;
 
@@ -8,6 +9,14 @@ namespace Algorithms.Test.Algorithms.Sorting
     [TestFixture]
     public class InsertionSortTests
     {
+        private ILogger logger;
+
+        [SetUp]
+        public void SetUpTest()
+        {
+            logger = new ConsoleLogger();
+        }
+
         [TestCase(true)]
         [TestCase(false)]
         public void SortAscending_IgnoreStability_SwapsEqualElement(bool isForwardSort)
@@ -34,7 +43,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(5)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, false, isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, false, isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -65,7 +74,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(1)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, false, isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, false, isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -94,7 +103,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(1)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -121,7 +130,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(1)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -132,7 +141,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var input = new [] { new SortValue<int>(1)  };
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(input));
         }
@@ -161,7 +170,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(1)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -190,7 +199,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(1)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -217,7 +226,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(5)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -244,7 +253,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(5)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -256,7 +265,7 @@ namespace Algorithms.Test.Algorithms.Sorting
             var input = new SortValue<int>[0];
             var expectedOutput = new SortValue<int>[0];
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -285,7 +294,7 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(6)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -314,8 +323,33 @@ namespace Algorithms.Test.Algorithms.Sorting
                 new SortValue<int>(6)
             };
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
 
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [Test]
+        public void SortAscending_AlreadySorted_OrderAscendingly()
+        {
+            var input = new[]
+            {
+                new SortValue<int>(1),
+                new SortValue<int>(2),
+                new SortValue<int>(3),
+                new SortValue<int>(4),
+                new SortValue<int>(5),
+            };
+
+            var expectedOutput = new[]
+            {
+                new SortValue<int>(1),
+                new SortValue<int>(2),
+                new SortValue<int>(3),
+                new SortValue<int>(4),
+                new SortValue<int>(5)
+            };
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger).Sort(input);
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
     }

@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using Algorithms.Utils.Extensions;
+using Algorithms.Utils.Logger;
 
 namespace Algorithms.Sorting
 {
     public class InsertionSort
     {
+        private readonly ILogger logger;
+
         private readonly SortOrder order;
         private readonly bool isStable;
         private readonly bool isForwardSort;
 
-        public InsertionSort(SortOrder order, bool isStable = true, bool isForwardSort = true)
+        public InsertionSort(SortOrder order, ILogger logger = null, bool isStable = true, bool isForwardSort = true)
         {
             this.isForwardSort = isForwardSort;
             this.order = order;
+            this.logger = logger;
             this.isStable = isStable;
         }
 
+        // BCS -> O(n) 
         public IList<T> Sort<T>(IList<T> input) where T: IComparable<T>
         {
             return isForwardSort
@@ -56,23 +61,35 @@ namespace Algorithms.Sorting
 
         private IList<T> SortForward<T>(IList<T> input) where T: IComparable<T>
         {
-            for (var outerIndex = 0; outerIndex < input.Count; outerIndex++)
+            logger.LogList("INITIAL", input);
+            for (var outerIndex = 1; outerIndex < input.Count; outerIndex++)
             {
+                logger.LogList("  OUTER BEGIN", input);
                 for (var innerIndex = outerIndex; innerIndex > 0; innerIndex--)
                 {
+                    logger.Log("    INNER LOOP");
                     var currentElemenet = input[innerIndex];
                     var previousElement = input[innerIndex - 1];
 
                     if (ShouldSwap(previousElement, currentElemenet))
                         SwapBackward(input, innerIndex, currentElemenet, previousElement);
+                    else
+                    {
+                        logger.Log("    No Swap");
+                        break;
+                    }
                 }
+                logger.LogList("  OUTER END", input);
             }
+
+            logger.LogList("RESULT", input);
 
             return input;
         }
 
-        private static void SwapBackward<T>(IList<T> input, int innerIndex, T currentElement, T previousElement)
+        private void SwapBackward<T>(IList<T> input, int innerIndex, T currentElement, T previousElement)
         {
+            logger.Log($"    Swap backward: Index: {innerIndex}, CurElem: {currentElement}, PrevElem: {previousElement}");
             input[innerIndex - 1] = currentElement;
             input[innerIndex] = previousElement;
         }

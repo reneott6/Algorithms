@@ -20,6 +20,10 @@ namespace Algorithms.Utils.Models
             return Value.CompareTo(other.Value);
         }
 
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
 
         public static bool operator > (SortValue<T> a, SortValue<T> b) => a.CompareTo(b) > 0;
         public static bool operator < (SortValue<T> a, SortValue<T> b) => a.CompareTo(b) < 0;
