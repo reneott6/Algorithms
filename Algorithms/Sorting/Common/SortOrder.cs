@@ -1,5 +1,5 @@
 ﻿
-namespace Algorithms.Sorting
+namespace Algorithms.Sorting.Common
 {
     public enum SortOrder
     {
