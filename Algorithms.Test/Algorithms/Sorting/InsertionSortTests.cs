@@ -1,7 +1,6 @@
 using System.Linq;
 using Algorithms.Sorting;
 using Algorithms.Test.Data;
-using Algorithms.Utils.Logger;
 using Algorithms.Utils.Models;
 using NUnit.Framework;
 
@@ -10,13 +9,11 @@ namespace Algorithms.Test.Algorithms.Sorting
     [TestFixture]
     public class InsertionSortTests
     {
-        private ISortLogger logger;
         private SortData data;
 
         [SetUp]
         public void SetUpTest()
         {
-            logger = new ConsoleSortLogger();
             data = new SortData();
         }
 
@@ -26,7 +23,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputSameValuesOrderedDesc_ExpectedOutputInstableOrderedAsc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, false, isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, false, isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -37,7 +34,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithSameValuesOrderedAsc_ExpectedOutputInstableOrderedDesc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, false, isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, false, isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -48,7 +45,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithSameValuesOrderedAsc_ExpectedOutputStableOrderedDesc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -59,7 +56,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesUnordered_ExpectedOutputOrderedDesc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -70,7 +67,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var input = new [] { new SortValue<int>(1)  };
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(input));
         }
@@ -81,7 +78,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfOrderedAsc_ExpectedOutputOrderedDesc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -92,7 +89,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfUnordered_ExpectedOutputOrderdDesc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Descending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -103,7 +100,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesOrderedDesc_ExpectedOutputOrderedAsc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -114,7 +111,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesUnordered_ExpectedOutputOrderedAsc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -126,7 +123,7 @@ namespace Algorithms.Test.Algorithms.Sorting
             var input = new SortValue<int>[0];
             var expectedOutput = new SortValue<int>[0];
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -137,7 +134,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedAscSecondHalfOrderedDesc_ExpectedOutputOrderedAsc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -148,7 +145,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfUnordered_ExpectedOutputOrderedAsc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
@@ -159,7 +156,7 @@ namespace Algorithms.Test.Algorithms.Sorting
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesOrderedAsc_ExpectedOutputOrderedAsc;
 
-            var orderedOutput = new InsertionSort(SortOrder.Ascending, logger, isForwardSort: isForwardSort).Sort(input);
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort).Sort(input);
 
             Assert.That(orderedOutput.SequenceEqual(expectedOutput));
         }
