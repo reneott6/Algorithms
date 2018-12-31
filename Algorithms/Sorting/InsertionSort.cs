@@ -26,7 +26,7 @@ namespace Algorithms.Sorting
             for (var outerIndex = input.Count - 1; outerIndex >= 0 ; outerIndex--)
             {
                 var innerIndex = outerIndex;
-                while (innerIndex < input.Count - 1 && AreElementsInversed(input[innerIndex], input[innerIndex + 1]))
+                while (innerIndex < input.Count - 1 && HasInversion(input[innerIndex], input[innerIndex + 1]))
                 {
                     SwapForward(input, innerIndex);
                     innerIndex++;
@@ -43,7 +43,7 @@ namespace Algorithms.Sorting
             for (var outerIndex = 1; outerIndex < input.Count; outerIndex++)
             {
                 var innerIndex = outerIndex;
-                while (innerIndex > 0 && AreElementsInversed(input[innerIndex - 1], input[innerIndex]))
+                while (innerIndex > 0 && HasInversion(input[innerIndex - 1], input[innerIndex]))
                 {
                     SwapBackward(input, innerIndex);
                     innerIndex--;

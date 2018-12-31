@@ -24,7 +24,7 @@ namespace Algorithms.Sorting.Common
             input[currentIndex - 1] = temp;
         }
 
-        protected bool AreElementsInversed<T>(IComparable<T> firstPosElement, T secondPosElement)
+        protected bool HasInversion<T>(IComparable<T> firstPosElement, T secondPosElement)
         {
             return Order == SortOrder.Ascending
                 ? IsStableSort
