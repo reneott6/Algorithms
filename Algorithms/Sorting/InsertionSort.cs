@@ -7,13 +7,13 @@ namespace Algorithms.Sorting
 {
     public class InsertionSort
     {
-        private readonly ILogger logger;
+        private readonly ISortLogger logger;
 
         private readonly SortOrder order;
         private readonly bool isStable;
         private readonly bool isForwardSort;
 
-        public InsertionSort(SortOrder order, ILogger logger = null, bool isStable = true, bool isForwardSort = true)
+        public InsertionSort(SortOrder order, ISortLogger logger = null, bool isStable = true, bool isForwardSort = true)
         {
             this.isForwardSort = isForwardSort;
             this.order = order;
@@ -62,37 +62,43 @@ namespace Algorithms.Sorting
 
         private IList<T> SortForward<T>(IList<T> input) where T: IComparable<T>
         {
-            logger.LogList("INITIAL", input);
+            logger.LogInitialList(input);
+
             for (var outerIndex = 1; outerIndex < input.Count; outerIndex++)
             {
-                logger.LogList("  OUTER BEGIN", input);
+                logger.LogOuterLoopBegin(input); //
                 for (var innerIndex = outerIndex; innerIndex > 0; innerIndex--)
                 {
-                    logger.Log("    INNER LOOP");
+                    logger.LogInnerLoopBegin(input); //
                     var currentElemenet = input[innerIndex];
                     var previousElement = input[innerIndex - 1];
 
                     if (HasInversion(previousElement, currentElemenet))
+                    {
                         SwapBackward(input, innerIndex, currentElemenet, previousElement);
+                        logger.LogInnerLoopEnd(input); //
+                    }
                     else
                     {
-                        logger.Log("    No Swap");
+                        logger.LogInnerLoopEnd(input); //
                         break;
                     }
                 }
-                logger.LogList("  OUTER END", input);
+
+                logger.LogOuterLoopEnd(input); //
             }
 
-            logger.LogList("RESULT", input);
+            logger.LogResultList(input); //
 
             return input;
         }
 
         private void SwapBackward<T>(IList<T> input, int innerIndex, T currentElement, T previousElement)
         {
-            logger.Log($"    Swap backward: Index: {innerIndex}, CurElem: {currentElement}, PrevElem: {previousElement}");
             input[innerIndex - 1] = currentElement;
             input[innerIndex] = previousElement;
+
+            logger.LogSwap(currentElement, previousElement); //
         }
 
         private bool HasInversion<T>(IComparable<T> firstPosElement, T secondPosElement)
