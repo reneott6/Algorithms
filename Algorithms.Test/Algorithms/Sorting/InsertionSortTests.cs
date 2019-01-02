@@ -20,7 +20,151 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortAsc_SameValuesOrderedDesc_InstableOrderedAsc(bool isForwardSort)
+        public void UnoptimizedSortAsc_SameValuesOrderedDesc_InstableOrderedAsc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputSameValuesOrderedDesc_ExpectedOutputInstableOrderedAsc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, false, isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortDesc_SameValuesOrderedAsc_InstableOrderedDesc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithSameValuesOrderedAsc_ExpectedOutputInstableOrderedDesc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Descending, false, isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortDesc_SameValuesOrderedAsc_StableOrderedDesc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithSameValuesOrderedAsc_ExpectedOutputStableOrderedDesc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortDesc_DistinctValuesUnordered_OrderedDesc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesUnordered_ExpectedOutputOrderedDesc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortDesc_OneElement_OneElement(bool isForwardSort)
+        {
+            var input = new [] { new SortValue<int>(1)  };
+
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(input));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortDesc_DistinctValuesFirstHalfOrderedDescSecondHalfOrderedAsc_OrderedDesc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfOrderedAsc_ExpectedOutputOrderedDesc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortDesc_DistinctValuesFirstHalfOrderedDescSecondHalfUnordered_OrderedDesc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfUnordered_ExpectedOutputOrderdDesc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortAsc_DistinctValuesOrderedDesc_OrderedAsc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesOrderedDesc_ExpectedOutputOrderedAsc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortAsc_DistinctValuesUnordered_OrderedAsc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesUnordered_ExpectedOutputOrderedAsc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortAsc_InputEmpty_ReturnEmpty(bool isForwardSort)
+        {
+            var input = new SortValue<int>[0];
+            var expectedOutput = new SortValue<int>[0];
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortAsc_DistinctValuesFirstHalfOrderedAscSecondHalfOrderedDesc_OrderedAsc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedAscSecondHalfOrderedDesc_ExpectedOutputOrderedAsc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortAsc_DistinctValuesFirstHalfOrderedDescSecondHalfUnordered_OrderedAsc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfUnordered_ExpectedOutputOrderedAsc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UnoptimizedSortAsc_DistinctValuesOrderedAsc_OrderedAsc(bool isForwardSort)
+        {
+            var (input, expectedOutput) = data.InputWithDistinctValuesOrderedAsc_ExpectedOutputOrderedAsc;
+
+            var orderedOutput = new InsertionSort(SortOrder.Ascending, isForwardSort: isForwardSort, isOptimized: false).Sort(input);
+
+            Assert.That(orderedOutput.SequenceEqual(expectedOutput));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void OptimizedSortAsc_SameValuesOrderedDesc_InstableOrderedAsc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputSameValuesOrderedDesc_ExpectedOutputInstableOrderedAsc;
 
@@ -31,7 +175,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortDesc_SameValuesOrderedAsc_InstableOrderedDesc(bool isForwardSort)
+        public void OptimizedSortDesc_SameValuesOrderedAsc_InstableOrderedDesc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithSameValuesOrderedAsc_ExpectedOutputInstableOrderedDesc;
 
@@ -42,7 +186,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortDesc_SameValuesOrderedAsc_StableOrderedDesc(bool isForwardSort)
+        public void OptimizedSortDesc_SameValuesOrderedAsc_StableOrderedDesc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithSameValuesOrderedAsc_ExpectedOutputStableOrderedDesc;
 
@@ -53,7 +197,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortDesc_DistinctValuesUnordered_OrderedDesc(bool isForwardSort)
+        public void OptimizedSortDesc_DistinctValuesUnordered_OrderedDesc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesUnordered_ExpectedOutputOrderedDesc;
 
@@ -64,9 +208,9 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortDesc_OneElement_OneElement(bool isForwardSort)
+        public void OptimizedSortDesc_OneElement_OneElement(bool isForwardSort)
         {
-            var input = new [] { new SortValue<int>(1)  };
+            var input = new[] { new SortValue<int>(1) };
 
             var orderedOutput = new InsertionSort(SortOrder.Descending, isForwardSort: isForwardSort).Sort(input);
 
@@ -75,7 +219,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortDesc_DistinctValuesFirstHalfOrderedDescSecondHalfOrderedAsc_OrderedDesc(bool isForwardSort)
+        public void OptimizedSortDesc_DistinctValuesFirstHalfOrderedDescSecondHalfOrderedAsc_OrderedDesc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfOrderedAsc_ExpectedOutputOrderedDesc;
 
@@ -86,7 +230,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortDesc_DistinctValuesFirstHalfOrderedDescSecondHalfUnordered_OrderedDesc(bool isForwardSort)
+        public void OptimizedSortDesc_DistinctValuesFirstHalfOrderedDescSecondHalfUnordered_OrderedDesc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfUnordered_ExpectedOutputOrderdDesc;
 
@@ -97,7 +241,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortAsc_DistinctValuesOrderedDesc_OrderedAsc(bool isForwardSort)
+        public void OptimizedSortAsc_DistinctValuesOrderedDesc_OrderedAsc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesOrderedDesc_ExpectedOutputOrderedAsc;
 
@@ -108,7 +252,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortAsc_DistinctValuesUnordered_OrderedAsc(bool isForwardSort)
+        public void OptimizedSortAsc_DistinctValuesUnordered_OrderedAsc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesUnordered_ExpectedOutputOrderedAsc;
 
@@ -119,7 +263,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortAsc_InputEmpty_ReturnEmpty(bool isForwardSort)
+        public void OptimizedSortAsc_InputEmpty_ReturnEmpty(bool isForwardSort)
         {
             var input = new SortValue<int>[0];
             var expectedOutput = new SortValue<int>[0];
@@ -131,7 +275,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortAsc_DistinctValuesFirstHalfOrderedAscSecondHalfOrderedDesc_OrderedAsc(bool isForwardSort)
+        public void OptimizedSortAsc_DistinctValuesFirstHalfOrderedAscSecondHalfOrderedDesc_OrderedAsc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedAscSecondHalfOrderedDesc_ExpectedOutputOrderedAsc;
 
@@ -142,7 +286,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortAsc_DistinctValuesFirstHalfOrderedDescSecondHalfUnordered_OrderedAsc(bool isForwardSort)
+        public void OptimizedSortAsc_DistinctValuesFirstHalfOrderedDescSecondHalfUnordered_OrderedAsc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesFirstHalfOrderedDescSecondHalfUnordered_ExpectedOutputOrderedAsc;
 
@@ -153,7 +297,7 @@ namespace Algorithms.Test.Algorithms.Sorting
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SortAsc_DistinctValuesOrderedAsc_OrderedAsc(bool isForwardSort)
+        public void OptimizedSortAsc_DistinctValuesOrderedAsc_OrderedAsc(bool isForwardSort)
         {
             var (input, expectedOutput) = data.InputWithDistinctValuesOrderedAsc_ExpectedOutputOrderedAsc;
 

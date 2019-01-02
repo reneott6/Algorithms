@@ -6,22 +6,46 @@ namespace Algorithms.Sorting
 {
     public class InsertionSort : ComparisonSort
     {
-        public InsertionSort(SortOrder order, bool isStable = true, bool isForwardSort = true)
+        private readonly bool isOptimized;
+
+        public InsertionSort(SortOrder order, bool isStable = true, bool isForwardSort = true, bool isOptimized = true)
         {
             Order = order;
             IsForwardSort = isForwardSort;
             IsStableSort = isStable;
+            this.isOptimized = isOptimized;
         }
 
         public IList<T> Sort<T>(IList<T> input) where T: IComparable<T>
         {
             return IsForwardSort
-                ? SortForward(input)
-                : SortBackward(input);
+                ? isOptimized
+                    ? SortForwardOptimized(input)
+                    : SortForwardUnoptimized(input)
+                : !isOptimized
+                    ? SortBackwardOptimized(input)
+                    : SortBackwardUnoptimized(input);
         }
 
-        // --unsorted--[i]--sorted--
-        private IList<T> SortBackward<T>(IList<T> input) where T : IComparable<T>
+        private IList<T> SortBackwardOptimized<T>(IList<T> input) where T : IComparable<T>
+        {
+            for (var outerIndex = input.Count - 2; outerIndex >= 0; outerIndex--)
+            {
+                var key = input[outerIndex];
+                var innerIndex = outerIndex + 1;
+                while (innerIndex <= input.Count-1 && HasInversion(key,input[innerIndex]))
+                {
+                    input[innerIndex - 1] = input[innerIndex];
+                    innerIndex++;
+                }
+
+                input[innerIndex - 1] = key;
+            }
+
+            return input;
+        }
+
+        private IList<T> SortBackwardUnoptimized<T>(IList<T> input) where T : IComparable<T>
         {
             for (var outerIndex = input.Count - 1; outerIndex >= 0 ; outerIndex--)
             {
@@ -36,9 +60,25 @@ namespace Algorithms.Sorting
             return input;
         }
 
-        // -sorted-[i]--unsorted--
-        // --sorted--[i]-unsorted-
-        private IList<T> SortForward<T>(IList<T> input) where T: IComparable<T>
+        private IList<T> SortForwardOptimized<T>(IList<T> input) where T: IComparable<T>
+        {
+            for (var outerIndex = 1; outerIndex < input.Count; outerIndex++)
+            {
+                var key = input[outerIndex];
+                var innerIndex = outerIndex - 1;
+                while (innerIndex >= 0 && HasInversion(input[innerIndex], key))
+                {
+                    input[innerIndex + 1] = input[innerIndex];
+                    innerIndex--;
+                }
+
+                input[innerIndex + 1] = key;
+            }
+
+            return input;
+        }
+
+        private IList<T> SortForwardUnoptimized<T>(IList<T> input) where T: IComparable<T>
         {
             for (var outerIndex = 1; outerIndex < input.Count; outerIndex++)
             {
